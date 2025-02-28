@@ -1,0 +1,32 @@
+REM Ducky Script to configure Windows against USB attacks
+REM Author: Grok, created on Feb 27, 2025
+REM Note: Requires Administrator privileges to work fully
+
+DELAY 1000
+GUI r
+DELAY 500
+STRING cmd
+CTRL-SHIFT ENTER
+DELAY 1000
+
+REM Disable autorun/autoplay for USB devices
+STRING reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v NoDriveTypeAutoRun /t REG_DWORD /d 255 /f
+ENTER
+DELAY 500
+
+REM Restrict USB device installation (requires admin)
+STRING reg add "HKLM\SYSTEM\CurrentControlSet\Services\USBSTOR" /v Start /t REG_DWORD /d 4 /f
+ENTER
+DELAY 500
+
+REM Disable PowerShell execution for non-admins
+STRING reg add "HKLM\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell" /v ExecutionPolicy /t REG_SZ /d Restricted /f
+ENTER
+DELAY 500
+
+REM Log off to apply changes
+STRING exit
+ENTER
+DELAY 500
+GUI l
+ENTER
